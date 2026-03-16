@@ -48,11 +48,47 @@ void addCardMenu(void)
     memset(&card, 0, sizeof(Card));
 
     printf("请输入卡号  (最多18位): ");
-    scanf("%18s", card.cardNo);
+    if (scanf("%18s", card.cardNo) != 1) {
+        clearInputBuf();
+        printf("输入无效！\n");
+        return;
+    }
+    {
+        int ch = getchar();
+        if (ch != '\n' && ch != EOF) {
+            clearInputBuf();
+            printf("卡号长度不能超过18位！\n");
+            return;
+        }
+    }
+    if (strlen(card.cardNo) == 0) {
+        printf("卡号为空！\n");
+        return;
+    }
     printf("请输入密码  (最多 8位): ");
-    scanf("%8s",  card.password);
+    if (scanf("%8s", card.password) != 1) {
+        clearInputBuf();
+        printf("输入无效！\n");
+        return;
+    }
+    {
+        int ch = getchar();
+        if (ch != '\n' && ch != EOF) {
+            clearInputBuf();
+            printf("密码长度不能超过8位！\n");
+            return;
+        }
+    }
+    if (strlen(card.password) == 0) {
+        printf("密码为空！\n");
+        return;
+    }
     printf("请输入开卡金额        : ");
-    scanf("%lf",  &card.money);
+    if (scanf("%lf", &card.money) != 1) {
+        clearInputBuf();
+        printf("输入无效！\n");
+        return;
+    }
 
     int ret = addCard(&card);
     if (ret == 1) {
@@ -78,7 +114,23 @@ void queryCardMenu(void)
     printf("请输入卡号关键字: ");
 
     char keyword[CARD_NO_LEN];
-    scanf("%18s", keyword);
+    if (scanf("%18s", keyword) != 1) {
+        clearInputBuf();
+        printf("输入无效！\n");
+        return;
+    }
+    {
+        int ch = getchar();
+        if (ch != '\n' && ch != EOF) {
+            clearInputBuf();
+            printf("卡号长度不能超过18位！\n");
+            return;
+        }
+    }
+    if (strlen(keyword) == 0) {
+        printf("卡号为空！\n");
+        return;
+    }
 
     CardList list, result;
     getCard(&list);
@@ -157,9 +209,27 @@ void loginMenu(void)
     char cardNo[CARD_NO_LEN];
     char password[PASSWORD_LEN];
     printf("请输入卡号: ");
-    scanf("%18s", cardNo);
+    if (scanf("%18s", cardNo) != 1) {
+        clearInputBuf();
+        printf("输入无效！\n");
+        free(plans);
+        return;
+    }
+    if (strlen(cardNo) == 0) {
+        printf("卡号为空！\n");
+        free(plans);
+        return;
+    }
     printf("请输入密码: ");
-    scanf("%8s",  password);
+    if (scanf("%8s", password) != 1) {
+        clearInputBuf();
+        printf("输入无效！\n");
+        return;
+    }
+    if (strlen(password) == 0) {
+        printf("密码为空！\n");
+        return;
+    }
 
     Card card;
     int ret = loginCard(cardNo, password, selectedRate, &card);
@@ -192,9 +262,25 @@ void logoutMenu(void)
     char cardNo[CARD_NO_LEN];
     char password[PASSWORD_LEN];
     printf("请输入卡号: ");
-    scanf("%18s", cardNo);
+    if (scanf("%18s", cardNo) != 1) {
+        clearInputBuf();
+        printf("输入无效！\n");
+        return;
+    }
+    if (strlen(cardNo) == 0) {
+        printf("卡号为空！\n");
+        return;
+    }
     printf("请输入密码: ");
-    scanf("%8s",  password);
+    if (scanf("%8s", password) != 1) {
+        clearInputBuf();
+        printf("输入无效！\n");
+        return;
+    }
+    if (strlen(password) == 0) {
+        printf("密码为空！\n");
+        return;
+    }
 
     double cost    = 0.0;
     time_t endTime = 0;
@@ -225,11 +311,31 @@ void rechargeMenu(void)
     double amount;
 
     printf("请输入卡号  : ");
-    scanf("%18s", cardNo);
+    if (scanf("%18s", cardNo) != 1) {
+        clearInputBuf();
+        printf("输入无效！\n");
+        return;
+    }
+    if (strlen(cardNo) == 0) {
+        printf("卡号为空！\n");
+        return;
+    }
     printf("请输入密码  : ");
-    scanf("%8s",  password);
+    if (scanf("%8s", password) != 1) {
+        clearInputBuf();
+        printf("输入无效！\n");
+        return;
+    }
+    if (strlen(password) == 0) {
+        printf("密码为空！\n");
+        return;
+    }
     printf("请输入充值金额: ");
-    scanf("%lf",  &amount);
+    if (scanf("%lf", &amount) != 1) {
+        clearInputBuf();
+        printf("输入无效！\n");
+        return;
+    }
 
     if (amount <= 0.0) {
         printf("充值金额必须大于0！\n");
@@ -262,11 +368,31 @@ void refundMenu(void)
     double amount;
 
     printf("请输入卡号  : ");
-    scanf("%18s", cardNo);
+    if (scanf("%18s", cardNo) != 1) {
+        clearInputBuf();
+        printf("输入无效！\n");
+        return;
+    }
+    if (strlen(cardNo) == 0) {
+        printf("卡号为空！\n");
+        return;
+    }
     printf("请输入密码  : ");
-    scanf("%8s",  password);
+    if (scanf("%8s", password) != 1) {
+        clearInputBuf();
+        printf("输入无效！\n");
+        return;
+    }
+    if (strlen(password) == 0) {
+        printf("密码为空！\n");
+        return;
+    }
     printf("请输入退费金额: ");
-    scanf("%lf",  &amount);
+    if (scanf("%lf", &amount) != 1) {
+        clearInputBuf();
+        printf("输入无效！\n");
+        return;
+    }
 
     if (amount <= 0.0) {
         printf("退费金额必须大于0！\n");
@@ -342,9 +468,25 @@ void cancelCardMenu(void)
     char cardNo[CARD_NO_LEN];
     char password[PASSWORD_LEN];
     printf("请输入卡号: ");
-    scanf("%18s", cardNo);
+    if (scanf("%18s", cardNo) != 1) {
+        clearInputBuf();
+        printf("输入无效！\n");
+        return;
+    }
+    if (strlen(cardNo) == 0) {
+        printf("卡号为空！\n");
+        return;
+    }
     printf("请输入密码: ");
-    scanf("%8s",  password);
+    if (scanf("%8s", password) != 1) {
+        clearInputBuf();
+        printf("输入无效！\n");
+        return;
+    }
+    if (strlen(password) == 0) {
+        printf("密码为空！\n");
+        return;
+    }
 
     double refundAmount = 0.0;
     int ret = cancelCardService(cardNo, password, &refundAmount);
